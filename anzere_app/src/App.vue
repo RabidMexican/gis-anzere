@@ -1,20 +1,22 @@
 <template>
-  <Home/>
+  <div id="app">
+    <Map/>
+  </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import Map from './components/AnzereMap.vue'
 
 export default {
   name: 'App',
   components: {
-    Home
+    Map
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-}
+  body {
+    margin: 0
+  }
 </style>
