@@ -5,4 +5,7 @@ urlpatterns = [
     path('', views.index),
     path('parking/all', views.all_parking),
     path('gare/all', views.all_gare),
+    path('commerce/all', views.all_commerce),
+    path('passage/all', views.all_passage),
+    path('piste/all', views.all_piste),
 ]
