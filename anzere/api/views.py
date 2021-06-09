@@ -37,3 +37,18 @@ def all_piste(response):
     all_piste_data = Piste.objects.all()
     all_piste_data = serialize('geojson', all_piste_data, geometry_field='geom')
     return HttpResponse(all_piste_data, content_type='application/json')
+
+def all_telecabine(response):
+    all_telecabine_data = Telecabine.objects.all()
+    all_telecabine_data =serialize('geojson', all_telecabine_data, geometry_field='geom')
+    return HttpResponse(all_telecabine_data, content_type='application/js')
+
+def all_telesiege(response):
+    all_telesiege_data = Telesiege.objects.all()
+    all_telesiege_data = serialize('geojson', all_telesiege_data, geometry_field='geom')
+    return HttpResponse(all_telesiege_data, content_type='application/js')
+
+def all_teleski(response):
+    all_teleski_data = Teleski.objects.all()
+    all_teleski_data = serialize('geojson', all_teleski_data, geometry_field='geom')
+    return HttpResponse(all_teleski_data, content_type='application/js')

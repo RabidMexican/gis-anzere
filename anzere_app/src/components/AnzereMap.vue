@@ -2,28 +2,54 @@
   <div id="map-container">
     <LMap :zoom="zoom" :center="center">
       <LTileLayer :url="url"></LTileLayer>
-      <LMarker :lat-lng="[46.29521, 7.39499]"></LMarker>
+      <LMarker
+          v-if="position"
+          name="You are here!"
+          :lat-lng="[position.latitude, position.longitude]"/>
+
       <LGeoJson
+          :options="opt_parking"
           v-for="parking in parkings"
           v-bind:key="parking.properties.nom"
           :geojson="parking.geometry"/>
-      <LGeoJson 
-          :options="options"
+
+      <LGeoJson
+          :options="getPisteOptions(piste)"
           v-for="piste in pistes"
           v-bind:key="piste.properties.nom"
           :geojson="piste.geometry"/>
+
       <LGeoJson
           v-for="shop in commerce"
           v-bind:key="shop.properties.nom"
           :geojson="shop.geometry"/>
+
       <LGeoJson
           v-for="passage in passages"
           v-bind:key="passage.properties.nom"
           :geojson="passage.geometry"/>
+
       <LGeoJson
           v-for="station in stations"
           v-bind:key="station.properties.nom"
           :geojson="station.geometry"/>
+
+      <LGeoJson
+          :options="opt_telecabine"
+          v-for="telecabine in telecabines"
+          v-bind:key="telecabine.properties.nom"
+          :geojson="telecabine.geometry"/>
+
+      <LGeoJson
+          :options="opt_charlift"
+          v-for="lift in chairlifts"
+          v-bind:key="lift.properties.nom"
+          :geojson="lift.geometry"/>
+
+      <LGeoJson
+          v-for="lift in skilifts"
+          v-bind:key="lift.properties.nom"
+          :geojson="lift.geometry"/>
     </LMap>
   </div>
 </template>
@@ -42,21 +68,43 @@ export default {
   },
   data() {
     return {
+      position: {
+        latitude: 0,
+        longitude: 0,
+      },
       parkings: [],
       pistes: [],
       commerce: [],
       passages: [],
       stations: [],
+      telecabines: [],
+      chairlifts: [],
+      skilifts: [],
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 16,
       center: [46.29521, 7.39499], // Telecabine
       bounds: null,
-      options: {
+      opt_charlift: {
+        color: "darkblue"
+      },
+      opt_skilift: {
         color: "red"
-      }
-    };
+      },
+      opt_parking: {
+        color: "purple",
+        fillOpacity: 0.5,
+      },
+       opt_telecabine: {
+        color: "green"
+      },
+    }
   },
   async mounted() {
+
+    // Get location
+    this.getLocation()
+
+    // Get all data
     await axios.get(API + 'parking/all')
       .then((response) => { 
         this.parkings = response.data.features
@@ -66,18 +114,54 @@ export default {
         this.pistes = response.data.features
       })
     await axios.get(API + 'commerce/all')
-    .then((response) => { 
-      this.commerce = response.data.features
-    })
+      .then((response) => { 
+        this.commerce = response.data.features
+      })
     await axios.get(API + 'passage/all')
-    .then((response) => { 
-      this.passages = response.data.features
-    })
+      .then((response) => { 
+        this.passages = response.data.features
+      })
     await axios.get(API + 'gare/all')
-    .then((response) => { 
-      this.stations = response.data.features
-    })
-  }
+      .then((response) => { 
+        this.stations = response.data.features
+      })
+    await axios.get(API + 'telecabine/all')
+      .then((response) => { 
+        this.telecabines = response.data.features
+      })
+    await axios.get(API + 'telesiege/all')
+      .then((response) => { 
+        this.chairlifts = response.data.features
+      })
+    await axios.get(API + 'teleski/all')
+      .then((response) => { 
+        this.skilifts = response.data.features
+      })
+  },
+  methods: {
+    getLocation() {
+       if(navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.updateLocation);
+      }
+    },
+    updateLocation(position) {
+      this.position.latitude = position.coords.latitude;
+      this.position.longitude = position.coords.longitude;
+    },
+    getPisteOptions (piste) { 
+      return  {
+        color: this.getColorForDifficulty(piste.properties.difficulty)
+      }
+    },
+    getColorForDifficulty(diff) {
+      switch(diff) {
+        case 1: return 'green'
+        case 2: return 'blue'
+        case 3: return 'red'
+        case 4: return 'black'
+      }
+    }
+  },
 }
 </script>
 
