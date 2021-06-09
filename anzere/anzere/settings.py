@@ -25,6 +25,8 @@ SECRET_KEY = 'django-insecure-qpt#s6+co-9u91)8tk4x_a^2vbw!kgwd@+wag(&+qjc!cm@&rt
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = True
+
 GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal204'
 GEOS_LIBRARY_PATH = r'C:\Program Files\PostgreSQL\13\bin\libgeos_c'
 
@@ -125,7 +127,3 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080"
-]

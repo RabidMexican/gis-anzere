@@ -4,7 +4,6 @@ import 'leaflet/dist/leaflet.css'
 import { Icon } from "leaflet"
 
 Vue.config.productionTip = false
-
 delete Icon.Default.prototype._getIconUrl;
 
 Icon.Default.mergeOptions({

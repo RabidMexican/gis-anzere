@@ -28,12 +28,12 @@ def all_commerce(response):
 
 
 def all_passage(response):
-    all_passage_data = Commerce.objects.all()
+    all_passage_data = Passage.objects.all()
     all_passage_data = serialize('geojson', all_passage_data, geometry_field='geom')
     return HttpResponse(all_passage_data, content_type='application/json')
 
 
 def all_piste(response):
-    all_piste_data = Commerce.objects.all()
+    all_piste_data = Piste.objects.all()
     all_piste_data = serialize('geojson', all_piste_data, geometry_field='geom')
     return HttpResponse(all_piste_data, content_type='application/json')
