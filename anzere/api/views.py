@@ -37,4 +37,3 @@ def all_piste(response):
     all_piste_data = Commerce.objects.all()
     all_piste_data = serialize('geojson', all_piste_data, geometry_field='geom')
     return HttpResponse(all_piste_data, content_type='application/json')
-
