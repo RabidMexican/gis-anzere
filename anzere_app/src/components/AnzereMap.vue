@@ -1,7 +1,9 @@
 <template>
   <div id="map-container">
     <LMap :zoom="zoom" :center="center">
-      <LTileLayer :url="url"></LTileLayer>
+
+      <LTileLayer :url="url"/>
+
       <LMarker
           v-if="position"
           name="You are here!"
@@ -10,46 +12,46 @@
       <LGeoJson
           :options="opt_parking"
           v-for="parking in parkings"
-          v-bind:key="parking.properties.nom"
+          v-bind:key="'PR' + parking.properties.pk"
           :geojson="parking.geometry"/>
 
       <LGeoJson
           :options="getPisteOptions(piste)"
           v-for="piste in pistes"
-          v-bind:key="piste.properties.nom"
+          v-bind:key="'PI' + piste.properties.pk"
           :geojson="piste.geometry"/>
 
       <LGeoJson
           v-for="shop in commerce"
-          v-bind:key="shop.properties.nom"
+          v-bind:key="'SH' + shop.properties.pk"
           :geojson="shop.geometry"/>
 
       <LGeoJson
           v-for="passage in passages"
-          v-bind:key="passage.properties.nom"
+          v-bind:key="'PA' + passage.properties.pk"
           :geojson="passage.geometry"/>
 
       <LGeoJson
           v-for="station in stations"
-          v-bind:key="station.properties.nom"
+          v-bind:key="'S' + station.properties.pk"
           :geojson="station.geometry"/>
 
       <LGeoJson
           :options="opt_telecabine"
           v-for="telecabine in telecabines"
-          v-bind:key="telecabine.properties.nom"
+          v-bind:key="'T' + telecabine.properties.pk"
           :geojson="telecabine.geometry"/>
 
       <LGeoJson
           :options="opt_charlift"
-          v-for="lift in chairlifts"
-          v-bind:key="lift.properties.nom"
-          :geojson="lift.geometry"/>
+          v-for="clift in chairlifts"
+          v-bind:key="'CL' + clift.properties.pk"
+          :geojson="clift.geometry"/>
 
       <LGeoJson
-          v-for="lift in skilifts"
-          v-bind:key="lift.properties.nom"
-          :geojson="lift.geometry"/>
+          v-for="slift in skilifts"
+          v-bind:key="'SL' + slift.properties.pk"
+          :geojson="slift.geometry"/>
     </LMap>
   </div>
 </template>
