@@ -4,6 +4,7 @@
 
       <LTileLayer :url="url"/>
 
+      <!-- USER LOCATION -->
       <LMarker
           v-if="position"
           name="You are here!"
@@ -15,6 +16,7 @@
         <LPopup content="You are here!"/>
       </LMarker>
 
+      <!-- PISTES -->
       <LPolyline
           v-for="piste in pistes"
           v-bind:key="'PI' + piste.properties.pk"
@@ -27,6 +29,7 @@
         </LPopup>
       </LPolyline>
 
+      <!-- PARKING -->
       <LPolygon
           v-for="parking in parkings"
           v-bind:key="'PK' + parking.properties.pk"
@@ -39,6 +42,7 @@
         </LPopup>
       </LPolygon>
 
+      <!-- COMMERCE -->
       <LPolygon
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
@@ -51,24 +55,17 @@
         </LPopup>
       </LPolygon>
 
-      <!--LGeoJson
-          v-for="shop in commerce"
-          v-bind:key="'SH' + shop.properties.pk"
-          :geojson="shop.geometry"/-->
-
       <LGeoJson
           v-for="station in stations"
           v-bind:key="'S' + station.properties.pk"
           :geojson="station.geometry"/>
 
       <LGeoJson
-          :options="opt_telecabine"
           v-for="telecabine in telecabines"
           v-bind:key="'T' + telecabine.properties.pk"
           :geojson="telecabine.geometry"/>
 
       <LGeoJson
-          :options="opt_charlift"
           v-for="clift in chairlifts"
           v-bind:key="'CL' + clift.properties.pk"
           :geojson="clift.geometry"/>
@@ -123,19 +120,6 @@ export default {
       zoom: 14,
       center: [46.3164, 7.4048], // Telecabine
       bounds: null,
-      opt_charlift: {
-        color: "darkblue"
-      },
-      opt_skilift: {
-        color: "red"
-      },
-      opt_parking: {
-        color: "purple",
-        fillOpacity: 0.5,
-      },
-       opt_telecabine: {
-        color: "green"
-      },
       mapOptions: {
         onEachFeature: function onEachFeature(feature, layer) {
           layer.bindPopup("Id is " + feature.properties.id);
@@ -205,7 +189,6 @@ export default {
           })
         })
       })
-      console.log(result)
       return result
     },
      getLineCoords(geojson) {
