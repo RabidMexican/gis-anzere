@@ -22,7 +22,7 @@
       <LPolyline
           v-for="piste in pistes"
           v-bind:key="'PI' + piste.properties.pk"
-          v-show="pistes_visible"
+          :visible="pistes_visible"
           :color="getPisteColor(piste.properties.difficulty)"
           :lat-lngs="getLineCoords(piste.geometry.coordinates)">
         <LPopup>
@@ -36,7 +36,7 @@
       <LPolygon
           v-for="parking in parkings"
           v-bind:key="'PK' + parking.properties.pk"
-          v-show="parking_visbile"
+          :visible="parking_visbile"
           :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
         <LPopup>
           <PopupParking 
@@ -50,7 +50,7 @@
       <LPolygon
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
-          v-show="commerce_visible"
+          :visible="commerce_visible"
           :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
         <LPopup>
           <PopupCommerce 
@@ -64,7 +64,7 @@
       <LPolygon
           v-for="station in stations"
           v-bind:key="'ST' + station.properties.pk"
-          v-show="stations_visible"
+          :visible="stations_visible"
           :lat-lngs="getPolyCoords(station.geometry.coordinates)">
         <LPopup>
           <PopupStation :name="station.properties.name"/>
@@ -75,7 +75,7 @@
       <LPolyline
           v-for="telecabine in telecabines"
           v-bind:key="'T' + telecabine.properties.pk"
-          v-show="telecabines_visible"
+          :visible="telecabines_visible"
           :lat-lngs="getLineCoords(telecabine.geometry.coordinates)">
         <LPopup>
           <PopupTelecabine :name="telecabine.properties.name"/>
@@ -86,7 +86,7 @@
       <LPolyline
           v-for="clift in chairlifts"
           v-bind:key="'CL' + clift.properties.pk"
-          v-show="chairlifts_visible"
+          :visible="chairlifts_visible"
           :lat-lngs="getLineCoords(clift.geometry.coordinates)">
         <LPopup>
           <PopupChairlift :name="clift.properties.name"/>
@@ -97,7 +97,7 @@
       <LPolyline
           v-for="slift in skilifts"
           v-bind:key="'SL' + slift.properties.pk"
-          v-show="skilifts_visible"
+          :visible="skilifts_visible"
           :lat-lngs="getLineCoords(slift.geometry.coordinates)">
         <LPopup>
           <PopupSkilift :name="slift.properties.name"/>
@@ -145,32 +145,41 @@ export default {
         latitude: 0,
         longitude: 0,
       },
-      parkings: [],
-      parking_visbile: true,
-      pistes: [],
-      pistes_visible: true,
-      commerce: [],
-      commerce_visible: true,
-      stations: [],
-      stations_visible: true,
-      telecabines: [],
-      telecabines_visible: true,
-      chairlifts: [],
-      chairlifts_visible: true,
-      skilifts: [],
-      skilifts_visible: true,
+
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 14,
-      center: [46.3164, 7.4048], // Telecabine
+      center: [46.3164, 7.4048],
+
+      parkings: [],
+      parking_visbile: true,
+
+      pistes: [],
+      pistes_visible: true,
+
+      commerce: [],
+      commerce_visible: true,
+
+      stations: [],
+      stations_visible: true,
+
+      telecabines: [],
+      telecabines_visible: true,
+
+      chairlifts: [],
+      chairlifts_visible: true,
+
+      skilifts: [],
+      skilifts_visible: true,
     }
   },
   created (){
-    EventBus.$on('toggle_telecabines', function (data) { this.telecabines_visible = data })
-    EventBus.$on('toggle_clifts',      function (data) { this.chairlifts_visible = data  })
-    EventBus.$on('toggle_slifts',      function (data) { this.skilifts_visible = data    })
-    EventBus.$on('toggle_stations',    function (data) { this.stations_visible = data    })
-    EventBus.$on('toggle_commerce',    function (data) { this.commerce_visible = data    })
-    EventBus.$on('toggle_parking',     function (data) { this.parking_visbile = data     })
+    EventBus.$on('toggle_pistes',      (data) => { this.pistes_visible = data } )
+    EventBus.$on('toggle_telecabines', (data) => { this.telecabines_visible = data })
+    EventBus.$on('toggle_clifts',      (data) => { this.chairlifts_visible = data })
+    EventBus.$on('toggle_slifts',      (data) => { this.skilifts_visible = data })
+    EventBus.$on('toggle_stations',    (data) => { this.stations_visible = data })
+    EventBus.$on('toggle_commerce',    (data) => { this.commerce_visible = data })
+    EventBus.$on('toggle_parking',     (data) => { this.parking_visbile = data })
   },
   async mounted() {
     // Get location
@@ -207,9 +216,6 @@ export default {
       })
   },
   methods: {
-    test() {
-      console.log("test : " + this.parking_visbile)
-    },
     getLocation() {
        if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(this.updateLocation);

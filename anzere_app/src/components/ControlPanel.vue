@@ -40,13 +40,13 @@ import { EventBus } from '../main'
 export default {
   name: "ControlPanel",
   methods: {
-    togglePistes:       function(event) { console.log('panel');EventBus.$emit('toggle_pistes', event.target.checked)   },
-    toggleTelecabines:  function(event) { EventBus.$emit('toggle_pistes', event.target.checked)   },
-    toggleChairlifts:   function(event) { EventBus.$emit('toggle_clifts', event.target.checked)   },
-    toggleSkilifts:     function(event) { EventBus.$emit('toggle_slifts', event.target.checked)   },
-    toggleStations:     function(event) { EventBus.$emit('toggle_stations', event.target.checked) },
-    toggleCommerce:     function(event) { EventBus.$emit('toggle_commerce', event.target.checked) },
-    toggleParking:      function(event) { EventBus.$emit('toggle_parking', event.target.checked)  },
+    togglePistes:       (event) => { EventBus.$emit('toggle_pistes', event.target.checked) },
+    toggleTelecabines:  (event) => { EventBus.$emit('toggle_telecabines', event.target.checked) },
+    toggleChairlifts:   (event) => { EventBus.$emit('toggle_clifts', event.target.checked) },
+    toggleSkilifts:     (event) => { EventBus.$emit('toggle_slifts', event.target.checked) },
+    toggleStations:     (event) => { EventBus.$emit('toggle_stations', event.target.checked) },
+    toggleCommerce:     (event) => { EventBus.$emit('toggle_commerce', event.target.checked) },
+    toggleParking:      (event) => { EventBus.$emit('toggle_parking', event.target.checked) },
   }
 }
 </script>
