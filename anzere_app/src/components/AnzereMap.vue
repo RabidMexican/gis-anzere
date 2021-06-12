@@ -1,13 +1,15 @@
 <template>
   <div id="map-container">
-    <LMap :zoom="zoom" :center="center">
+    <LMap :zoom="zoom" :center="center" :options="mapOptions">
 
       <LTileLayer :url="url"/>
 
       <LMarker
           v-if="position"
           name="You are here!"
-          :lat-lng="[position.latitude, position.longitude]"/>
+          :lat-lng="[position.latitude, position.longitude]">
+        <LPopup content="You are here!"/>
+      </LMarker>
 
       <LGeoJson
           :options="opt_parking"
@@ -25,11 +27,6 @@
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
           :geojson="shop.geometry"/>
-
-      <LGeoJson
-          v-for="passage in passages"
-          v-bind:key="'PA' + passage.properties.pk"
-          :geojson="passage.geometry"/>
 
       <LGeoJson
           v-for="station in stations"
@@ -52,12 +49,13 @@
           v-for="slift in skilifts"
           v-bind:key="'SL' + slift.properties.pk"
           :geojson="slift.geometry"/>
+
     </LMap>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LGeoJson, LPopup } from "vue2-leaflet";
 import axios from 'axios'
 import API from '../constants'
 export default {
@@ -66,7 +64,8 @@ export default {
     LMap,
     LTileLayer,
     LMarker,
-    LGeoJson
+    LGeoJson,
+    LPopup,
   },
   data() {
     return {
@@ -99,6 +98,11 @@ export default {
        opt_telecabine: {
         color: "green"
       },
+      mapOptions: {
+        onEachFeature: function onEachFeature(feature, layer) {
+          layer.bindPopup("Id is " + feature.properties.id);
+        }
+      }
     }
   },
   async mounted() {
@@ -118,10 +122,6 @@ export default {
     await axios.get(API + 'commerce/all')
       .then((response) => { 
         this.commerce = response.data.features
-      })
-    await axios.get(API + 'passage/all')
-      .then((response) => { 
-        this.passages = response.data.features
       })
     await axios.get(API + 'gare/all')
       .then((response) => { 
