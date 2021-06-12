@@ -4,10 +4,20 @@ from django.contrib.gis.db import models
 # PARKING
 class Parking(models.Model):
     id = models.IntegerField(primary_key=True)
-    nom = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     nb_place = models.IntegerField()
     free = models.BooleanField()
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -19,6 +29,16 @@ class Gare(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -35,6 +55,16 @@ class Commerce(models.Model):
     geom = models.MultiPolygonField()
     nb_place = models.IntegerField()
     type = models.IntegerField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -65,6 +95,16 @@ class Piste(models.Model):
     name = models.CharField(max_length=100)
     difficulty = models.IntegerField()
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -81,6 +121,16 @@ class Telecabine(models.Model):
     capacity = models.IntegerField()
     duration = models.IntegerField()
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -97,6 +147,16 @@ class Telesiege(models.Model):
     capacity = models.IntegerField()
     duration = models.IntegerField()
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
@@ -113,6 +173,16 @@ class Teleski(models.Model):
     capacity = models.IntegerField()
     duration = models.IntegerField()
     geom = models.MultiPolygonField()
+    t_0 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_1 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_2 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_3 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_4 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_5 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_6 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_7 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_8 = models.DecimalField(max_digits=10, decimal_places=10, )
+    t_9 = models.DecimalField(max_digits=10, decimal_places=10, )
 
     class Meta:
         managed = False
