@@ -11,11 +11,17 @@
         <LPopup content="You are here!"/>
       </LMarker>
 
-      <LGeoJson
-          :options="opt_parking"
+      <LPolygon 
           v-for="parking in parkings"
           v-bind:key="'PR' + parking.properties.pk"
-          :geojson="parking.geometry"/>
+          :lat-lngs="getCoords(parking.geometry.coordinates)">
+        <LPopup>
+          <PopupParking 
+              :name="parking.properties.name"
+              :capacity="parking.properties.nb_place"
+              :free="parking.properties.free"/>
+        </LPopup>
+      </LPolygon>
 
       <LGeoJson
           :options="getPisteOptions(piste)"
@@ -55,17 +61,20 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson, LPopup } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon } from 'vue2-leaflet'
+import PopupParking from './popups/PopupParking.vue'
 import axios from 'axios'
 import API from '../constants'
 export default {
   name: "Map",
   components: {
+    PopupParking,
     LMap,
     LTileLayer,
     LMarker,
     LGeoJson,
     LPopup,
+    LPolygon,
   },
   data() {
     return {
@@ -106,7 +115,6 @@ export default {
     }
   },
   async mounted() {
-
     // Get location
     this.getLocation()
 
@@ -162,6 +170,18 @@ export default {
         case 3: return 'red'
         case 4: return 'black'
       }
+    },
+    getCoords(geojson) {
+      let result = []
+      geojson.forEach((top) => {
+        top.forEach((middle) => {
+          middle.forEach((bottom) => {
+            bottom = new Array(bottom[1], bottom[0])
+            result.push(bottom)
+          })
+        })
+      })
+      return result
     }
   },
 }
