@@ -1,6 +1,5 @@
 <template>
   <div id="map-container">
-    <Button @click="test">TEST</Button>
     <LMap :zoom="zoom" :center="center">
 
       <div class="background"/>
