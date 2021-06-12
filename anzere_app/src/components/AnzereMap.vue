@@ -15,19 +15,6 @@
         <LPopup content="You are here!"/>
       </LMarker>
 
-      <LPolygon
-          class="shadow"
-          v-for="parking in parkings"
-          v-bind:key="'PK' + parking.properties.pk"
-          :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
-        <LPopup>
-          <PopupParking 
-              :name="parking.properties.name"
-              :capacity="parking.properties.nb_place"
-              :free="parking.properties.free"/>
-        </LPopup>
-      </LPolygon>
-
       <LPolyline
           v-for="piste in pistes"
           v-bind:key="'PI' + piste.properties.pk"
@@ -40,16 +27,30 @@
         </LPopup>
       </LPolyline>
 
-      <!--LGeoJson
-          :options="getPisteOptions(piste)"
-          v-for="piste in pistes"
-          v-bind:key="'PI' + piste.properties.pk"
-          :geojson="piste.geometry"/-->
+      <LPolygon
+          v-for="parking in parkings"
+          v-bind:key="'PK' + parking.properties.pk"
+          :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
+        <LPopup>
+          <PopupParking 
+              :name="parking.properties.name"
+              :capacity="parking.properties.nb_place"
+              :free="parking.properties.free"/>
+        </LPopup>
+      </LPolygon>
 
-      <LGeoJson
+      <LPolygon
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
-          :geojson="shop.geometry"/>
+          :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
+        <LPopup>
+        </LPopup>
+      </LPolygon>
+
+      <!--LGeoJson
+          v-for="shop in commerce"
+          v-bind:key="'SH' + shop.properties.pk"
+          :geojson="shop.geometry"/-->
 
       <LGeoJson
           v-for="station in stations"
@@ -217,8 +218,5 @@ export default {
 <style scoped>
 #map-container {
   height: 100vh
-}
-.shadow { 
-  filter: drop-shadow(0px 0px 10px rgba(0,0,0,.5));
 }
 </style>

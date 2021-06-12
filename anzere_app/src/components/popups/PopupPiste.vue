@@ -31,8 +31,6 @@ export default {
       priceText: 'Free'
     }
   },
-  mounted() {
-  },
   methods: {
     getDifficultyString: function(diff) {
       switch(diff) {
