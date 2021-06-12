@@ -8,6 +8,10 @@
           v-if="position"
           name="You are here!"
           :lat-lng="[position.latitude, position.longitude]">
+        <LIcon 
+            icon-url="/images/location.png"
+            :icon-size="[50, 50]"
+            :icon-anchor="[25, 45]"/>
         <LPopup content="You are here!"/>
       </LMarker>
 
@@ -61,7 +65,7 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon, LIcon } from 'vue2-leaflet'
 import PopupParking from './popups/PopupParking.vue'
 import axios from 'axios'
 import API from '../constants'
@@ -75,6 +79,7 @@ export default {
     LGeoJson,
     LPopup,
     LPolygon,
+    LIcon,
   },
   data() {
     return {

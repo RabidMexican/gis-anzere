@@ -4,7 +4,10 @@
     <div v-bind:class="free ? 'free' : 'paid'" class="price">
       {{ priceText }}
     </div>
-    <div class="capacity">Capacity : {{ capacity }}</div>
+    <div class="icon-wrapper">
+      <div class="capacity">Capacity : {{ capacity }}</div>
+      <img src="/images/icons/parking.png" class="icon">
+    </div>
   </div>
 </template>
 
@@ -23,7 +26,7 @@ export default {
     },
     free: {
       require: true,
-      type: Boolean,
+      type: Number,
     }
   },
   data() {
@@ -32,8 +35,7 @@ export default {
     }
   },
   mounted() {
-    if(!this.free)
-      this.priceText = 'Pay to stay'
+    if(!this.free) this.priceText = 'Pay to stay'
   }
 }
 </script>
@@ -44,4 +46,12 @@ export default {
   .capacity { margin-top: 5px }
   .free { color: green }
   .paid { color: red }
+  .icon-wrapper { 
+    display: flex; 
+    justify-content: space-between;
+  }
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
 </style>
