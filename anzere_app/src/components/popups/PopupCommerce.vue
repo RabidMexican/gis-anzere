@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">{{ name }}</div>
-    <div>{{ getType(type) }}</div>
+    <i>{{ getType(type) }}</i>
     <div>Number of places : {{ places }}</div>
   </div>
 </template>

@@ -1,7 +1,8 @@
 <template>
   <div id="map-container">
-    <LMap :zoom="zoom" :center="center" :options="mapOptions">
+    <LMap :zoom="zoom" :center="center">
 
+      <div class="background"/>
       <LTileLayer :url="url"/>
 
       <!-- USER LOCATION -->
@@ -20,6 +21,7 @@
       <LPolyline
           v-for="piste in pistes"
           v-bind:key="'PI' + piste.properties.pk"
+          v-show="pistes_visible"
           :color="getPisteColor(piste.properties.difficulty)"
           :lat-lngs="getLineCoords(piste.geometry.coordinates)">
         <LPopup>
@@ -33,6 +35,7 @@
       <LPolygon
           v-for="parking in parkings"
           v-bind:key="'PK' + parking.properties.pk"
+          v-show="parking_visbile"
           :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
         <LPopup>
           <PopupParking 
@@ -46,6 +49,7 @@
       <LPolygon
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
+          v-show="commerce_visible"
           :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
         <LPopup>
           <PopupCommerce 
@@ -55,12 +59,51 @@
         </LPopup>
       </LPolygon>
 
-      <LGeoJson
+      <!-- STATIONS -->
+      <LPolygon
           v-for="station in stations"
-          v-bind:key="'S' + station.properties.pk"
-          :geojson="station.geometry"/>
+          v-bind:key="'ST' + station.properties.pk"
+          v-show="stations_visible"
+          :lat-lngs="getPolyCoords(station.geometry.coordinates)">
+        <LPopup>
+          <PopupStation :name="station.properties.name"/>
+        </LPopup>
+      </LPolygon>
 
-      <LGeoJson
+      <!-- TELECABINES -->
+      <LPolyline
+          v-for="telecabine in telecabines"
+          v-bind:key="'T' + telecabine.properties.pk"
+          v-show="telecabines_visible"
+          :lat-lngs="getLineCoords(telecabine.geometry.coordinates)">
+        <LPopup>
+          <PopupTelecabine :name="telecabine.properties.name"/>
+        </LPopup>
+      </LPolyline>
+
+      <!-- CHAIRLIFTS -->
+      <LPolyline
+          v-for="clift in chairlifts"
+          v-bind:key="'CL' + clift.properties.pk"
+          v-show="chairlifts_visible"
+          :lat-lngs="getLineCoords(clift.geometry.coordinates)">
+        <LPopup>
+          <PopupChairlift :name="clift.properties.name"/>
+        </LPopup>
+      </LPolyline>
+
+      <!-- SKILIFTS -->
+      <LPolyline
+          v-for="slift in skilifts"
+          v-bind:key="'SL' + slift.properties.pk"
+          v-show="skilifts_visible"
+          :lat-lngs="getLineCoords(slift.geometry.coordinates)">
+        <LPopup>
+          <PopupSkilift :name="slift.properties.name"/>
+        </LPopup>
+      </LPolyline>
+
+      <!--LGeoJson
           v-for="telecabine in telecabines"
           v-bind:key="'T' + telecabine.properties.pk"
           :geojson="telecabine.geometry"/>
@@ -73,17 +116,21 @@
       <LGeoJson
           v-for="slift in skilifts"
           v-bind:key="'SL' + slift.properties.pk"
-          :geojson="slift.geometry"/>
+          :geojson="slift.geometry"/-->
 
     </LMap>
   </div>
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
 import PopupParking from './popups/PopupParking'
 import PopupPiste from './popups/PopupPiste'
 import PopupCommerce from './popups/PopupCommerce'
+import PopupStation from './popups/PopupStation'
+import PopupTelecabine from './popups/PopupTelecabine'
+import PopupChairlift from './popups/PopupCharlift'
+import PopupSkilift from './popups/PopupSkilift'
 import axios from 'axios'
 import API from '../constants'
 
@@ -93,10 +140,13 @@ export default {
     PopupParking,
     PopupPiste,
     PopupCommerce,
+    PopupStation,
+    PopupTelecabine,
+    PopupChairlift,
+    PopupSkilift,
     LMap,
     LTileLayer,
     LMarker,
-    LGeoJson,
     LPopup,
     LPolygon,
     LPolyline,
@@ -109,22 +159,22 @@ export default {
         longitude: 0,
       },
       parkings: [],
+      parking_visbile: true,
       pistes: [],
+      pistes_visible: true,
       commerce: [],
-      passages: [],
+      commerce_visible: true,
       stations: [],
+      stations_visible: true,
       telecabines: [],
+      telecabines_visible: true,
       chairlifts: [],
+      chairlifts_visible: true,
       skilifts: [],
+      skilifts_visible: true,
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
       zoom: 14,
       center: [46.3164, 7.4048], // Telecabine
-      bounds: null,
-      mapOptions: {
-        onEachFeature: function onEachFeature(feature, layer) {
-          layer.bindPopup("Id is " + feature.properties.id);
-        }
-      }
     }
   },
   async mounted() {
@@ -208,5 +258,10 @@ export default {
 <style scoped>
 #map-container {
   height: 100vh
+}
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }
 </style>
