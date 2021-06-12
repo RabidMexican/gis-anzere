@@ -1,5 +1,6 @@
 <template>
   <div id="map-container">
+    <Button @click="test">TEST</Button>
     <LMap :zoom="zoom" :center="center">
 
       <div class="background"/>
@@ -103,21 +104,6 @@
         </LPopup>
       </LPolyline>
 
-      <!--LGeoJson
-          v-for="telecabine in telecabines"
-          v-bind:key="'T' + telecabine.properties.pk"
-          :geojson="telecabine.geometry"/>
-
-      <LGeoJson
-          v-for="clift in chairlifts"
-          v-bind:key="'CL' + clift.properties.pk"
-          :geojson="clift.geometry"/>
-
-      <LGeoJson
-          v-for="slift in skilifts"
-          v-bind:key="'SL' + slift.properties.pk"
-          :geojson="slift.geometry"/-->
-
     </LMap>
   </div>
 </template>
@@ -131,6 +117,7 @@ import PopupStation from './popups/PopupStation'
 import PopupTelecabine from './popups/PopupTelecabine'
 import PopupChairlift from './popups/PopupCharlift'
 import PopupSkilift from './popups/PopupSkilift'
+import { EventBus } from '../main'
 import axios from 'axios'
 import API from '../constants'
 
@@ -177,6 +164,14 @@ export default {
       center: [46.3164, 7.4048], // Telecabine
     }
   },
+  created (){
+    EventBus.$on('toggle_telecabines', function (data) { this.telecabines_visible = data })
+    EventBus.$on('toggle_clifts',      function (data) { this.chairlifts_visible = data  })
+    EventBus.$on('toggle_slifts',      function (data) { this.skilifts_visible = data    })
+    EventBus.$on('toggle_stations',    function (data) { this.stations_visible = data    })
+    EventBus.$on('toggle_commerce',    function (data) { this.commerce_visible = data    })
+    EventBus.$on('toggle_parking',     function (data) { this.parking_visbile = data     })
+  },
   async mounted() {
     // Get location
     this.getLocation()
@@ -212,6 +207,9 @@ export default {
       })
   },
   methods: {
+    test() {
+      console.log("test : " + this.parking_visbile)
+    },
     getLocation() {
        if(navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(this.updateLocation);
