@@ -15,10 +15,11 @@
         <LPopup content="You are here!"/>
       </LMarker>
 
-      <LPolygon 
+      <LPolygon
+          class="shadow"
           v-for="parking in parkings"
-          v-bind:key="'PR' + parking.properties.pk"
-          :lat-lngs="getCoords(parking.geometry.coordinates)">
+          v-bind:key="'PK' + parking.properties.pk"
+          :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
         <LPopup>
           <PopupParking 
               :name="parking.properties.name"
@@ -27,11 +28,23 @@
         </LPopup>
       </LPolygon>
 
-      <LGeoJson
+      <LPolyline
+          v-for="piste in pistes"
+          v-bind:key="'PI' + piste.properties.pk"
+          :color="getPisteColor(piste.properties.difficulty)"
+          :lat-lngs="getLineCoords(piste.geometry.coordinates)">
+        <LPopup>
+          <PopupPiste
+              :name="piste.properties.name"
+              :difficulty="piste.properties.difficulty"/>
+        </LPopup>
+      </LPolyline>
+
+      <!--LGeoJson
           :options="getPisteOptions(piste)"
           v-for="piste in pistes"
           v-bind:key="'PI' + piste.properties.pk"
-          :geojson="piste.geometry"/>
+          :geojson="piste.geometry"/-->
 
       <LGeoJson
           v-for="shop in commerce"
@@ -65,20 +78,23 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon, LIcon } from 'vue2-leaflet'
+import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
 import PopupParking from './popups/PopupParking.vue'
+import PopupPiste from './popups/PopupPiste.vue'
 import axios from 'axios'
 import API from '../constants'
 export default {
   name: "Map",
   components: {
     PopupParking,
+    PopupPiste,
     LMap,
     LTileLayer,
     LMarker,
     LGeoJson,
     LPopup,
     LPolygon,
+    LPolyline,
     LIcon,
   },
   data() {
@@ -96,8 +112,8 @@ export default {
       chairlifts: [],
       skilifts: [],
       url: "https://{s}.tile.osm.org/{z}/{x}/{y}.png",
-      zoom: 16,
-      center: [46.29521, 7.39499], // Telecabine
+      zoom: 14,
+      center: [46.3164, 7.4048], // Telecabine
       bounds: null,
       opt_charlift: {
         color: "darkblue"
@@ -163,12 +179,7 @@ export default {
       this.position.latitude = position.coords.latitude;
       this.position.longitude = position.coords.longitude;
     },
-    getPisteOptions (piste) { 
-      return  {
-        color: this.getColorForDifficulty(piste.properties.difficulty)
-      }
-    },
-    getColorForDifficulty(diff) {
+    getPisteColor (diff) { 
       switch(diff) {
         case 1: return 'green'
         case 2: return 'blue'
@@ -176,7 +187,7 @@ export default {
         case 4: return 'black'
       }
     },
-    getCoords(geojson) {
+    getPolyCoords(geojson) {
       let result = []
       geojson.forEach((top) => {
         top.forEach((middle) => {
@@ -185,6 +196,17 @@ export default {
             result.push(bottom)
           })
         })
+      })
+      console.log(result)
+      return result
+    },
+     getLineCoords(geojson) {
+      let result = []
+      geojson.forEach((top) => {
+          top.forEach((bottom) => {
+            bottom = new Array(bottom[1], bottom[0])
+            result.push(bottom)
+          })
       })
       return result
     }
@@ -195,5 +217,8 @@ export default {
 <style scoped>
 #map-container {
   height: 100vh
+}
+.shadow { 
+  filter: drop-shadow(0px 0px 10px rgba(0,0,0,.5));
 }
 </style>

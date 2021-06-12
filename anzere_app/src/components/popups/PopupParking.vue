@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="popup">
     <div class="title">{{ name }}</div>
     <div v-bind:class="free ? 'free' : 'paid'" class="price">
       {{ priceText }}
@@ -43,7 +43,10 @@ export default {
 <style scoped>
   .title { font-size: large }
   .price { font-size: large }
-  .capacity { margin-top: 5px }
+  .capacity { 
+    margin-top: 5px;
+    margin-right: 10px;
+  }
   .free { color: green }
   .paid { color: red }
   .icon-wrapper { 
