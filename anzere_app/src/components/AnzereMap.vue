@@ -44,6 +44,10 @@
           v-bind:key="'SH' + shop.properties.pk"
           :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
         <LPopup>
+          <PopupCommerce 
+              :name="shop.properties.name"
+              :type="shop.properties.type"
+              :places="shop.properties.nb_place"/>
         </LPopup>
       </LPolygon>
 
@@ -80,15 +84,18 @@
 
 <script>
 import { LMap, LTileLayer, LMarker, LGeoJson, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
-import PopupParking from './popups/PopupParking.vue'
-import PopupPiste from './popups/PopupPiste.vue'
+import PopupParking from './popups/PopupParking'
+import PopupPiste from './popups/PopupPiste'
+import PopupCommerce from './popups/PopupCommerce'
 import axios from 'axios'
 import API from '../constants'
+
 export default {
   name: "Map",
   components: {
     PopupParking,
     PopupPiste,
+    PopupCommerce,
     LMap,
     LTileLayer,
     LMarker,
@@ -96,7 +103,7 @@ export default {
     LPopup,
     LPolygon,
     LPolyline,
-    LIcon,
+    LIcon
   },
   data() {
     return {
