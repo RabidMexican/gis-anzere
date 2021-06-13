@@ -4,31 +4,31 @@
     <table>
       <tr>
         <td>Pistes</td>
-        <td><input type="checkbox" @change="togglePistes($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.PISTES, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Telecabines</td>
-        <td><input type="checkbox" @change="toggleTelecabines($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.TELECABINES, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Chair-Lifts</td>
-        <td><input type="checkbox" @change="toggleChairlifts($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.CHAIRLIFTS, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Ski-Lifts</td>
-        <td><input type="checkbox" @change="toggleSkilifts($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.SKILIFTS, $event.target.checked) " checked></td>
       </tr>
       <tr>
         <td>Stations</td>
-        <td><input type="checkbox" @change="toggleStations($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.STATIONS, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Restaurants & Bars</td>
-        <td><input type="checkbox" @change="toggleCommerce($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.COMMERCE, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Parking</td>
-        <td><input type="checkbox" @change="toggleParking($event)" checked></td>
+        <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.PARKING, $event.target.checked)" checked></td>
       </tr>
     </table>
   </div>
@@ -36,17 +36,15 @@
 
 <script>
 import { EventBus } from '../main'
+import { EVENTS } from '../constants'
 
 export default {
   name: "ControlPanel",
-  methods: {
-    togglePistes:       (event) => { EventBus.$emit('toggle_pistes', event.target.checked) },
-    toggleTelecabines:  (event) => { EventBus.$emit('toggle_telecabines', event.target.checked) },
-    toggleChairlifts:   (event) => { EventBus.$emit('toggle_clifts', event.target.checked) },
-    toggleSkilifts:     (event) => { EventBus.$emit('toggle_slifts', event.target.checked) },
-    toggleStations:     (event) => { EventBus.$emit('toggle_stations', event.target.checked) },
-    toggleCommerce:     (event) => { EventBus.$emit('toggle_commerce', event.target.checked) },
-    toggleParking:      (event) => { EventBus.$emit('toggle_parking', event.target.checked) },
+  data() {
+    return {
+      BUS: EventBus,
+      EVENTS: EVENTS
+    }
   }
 }
 </script>

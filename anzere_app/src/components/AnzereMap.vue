@@ -108,7 +108,9 @@
 </template>
 
 <script>
+import { API, EVENTS } from '../constants'
 import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
+
 import PopupParking from './popups/PopupParking'
 import PopupPiste from './popups/PopupPiste'
 import PopupCommerce from './popups/PopupCommerce'
@@ -116,9 +118,9 @@ import PopupStation from './popups/PopupStation'
 import PopupTelecabine from './popups/PopupTelecabine'
 import PopupChairlift from './popups/PopupCharlift'
 import PopupSkilift from './popups/PopupSkilift'
+
 import { EventBus } from '../main'
 import axios from 'axios'
-import API from '../constants'
 
 export default {
   name: "Map",
@@ -172,13 +174,13 @@ export default {
     }
   },
   created (){
-    EventBus.$on('toggle_pistes',      (data) => { this.pistes_visible = data } )
-    EventBus.$on('toggle_telecabines', (data) => { this.telecabines_visible = data })
-    EventBus.$on('toggle_clifts',      (data) => { this.chairlifts_visible = data })
-    EventBus.$on('toggle_slifts',      (data) => { this.skilifts_visible = data })
-    EventBus.$on('toggle_stations',    (data) => { this.stations_visible = data })
-    EventBus.$on('toggle_commerce',    (data) => { this.commerce_visible = data })
-    EventBus.$on('toggle_parking',     (data) => { this.parking_visbile = data })
+    EventBus.$on(EVENTS.TOGGLE.PISTES,      (state) => { this.pistes_visible = state } )
+    EventBus.$on(EVENTS.TOGGLE.TELECABINES, (state) => { this.telecabines_visible = state })
+    EventBus.$on(EVENTS.TOGGLE.CHAIRLIFTS,  (state) => { this.chairlifts_visible = state })
+    EventBus.$on(EVENTS.TOGGLE.SKILIFTS,    (state) => { this.skilifts_visible = state })
+    EventBus.$on(EVENTS.TOGGLE.STATIONS,    (state) => { this.stations_visible = state })
+    EventBus.$on(EVENTS.TOGGLE.COMMERCE,    (state) => { this.commerce_visible = state })
+    EventBus.$on(EVENTS.TOGGLE.PARKING,     (state) => { this.parking_visbile = state })
   },
   async mounted() {
     // Get location
