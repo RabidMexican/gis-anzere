@@ -2,12 +2,8 @@
   <div>
     <div class="title">Piste - {{ name }}</div>
     <div class="difficulty-wrapper">
-      <div 
-          class="difficulty-circle"
-          :style="'background-color:' + getDifficultyColor(difficulty)"/>
-      <div class="difficulty-text">
-        {{ getDifficultyString(difficulty) }}
-      </div>
+      <div class="difficulty-circle" :style="'background-color:' + getPisteColor(difficulty)"/>
+      <div class="difficulty-text">{{ getDifficultyString(difficulty) }}</div>
     </div>
   </div>
 </template>
@@ -32,6 +28,7 @@ export default {
     }
   },
   methods: {
+    // Get name of piste difficulty
     getDifficultyString: function(diff) {
       switch(diff) {
         case 1: return "Beginner"
@@ -40,14 +37,6 @@ export default {
         case 4: return "Expert"
       }
     },
-    getDifficultyColor: function(diff) {
-      switch(diff) {
-        case 1: return "green"
-        case 2: return "blue"
-        case 3: return "red"
-        case 4: return "black"
-      }
-    }
   }
 }
 </script>

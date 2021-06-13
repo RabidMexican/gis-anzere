@@ -174,6 +174,7 @@ export default {
     }
   },
   created (){
+    // Add listeners for filters
     EventBus.$on(EVENTS.TOGGLE.PISTES,      (state) => { this.pistes_visible = state } )
     EventBus.$on(EVENTS.TOGGLE.TELECABINES, (state) => { this.telecabines_visible = state })
     EventBus.$on(EVENTS.TOGGLE.CHAIRLIFTS,  (state) => { this.chairlifts_visible = state })
@@ -183,80 +184,37 @@ export default {
     EventBus.$on(EVENTS.TOGGLE.PARKING,     (state) => { this.parking_visbile = state })
   },
   async mounted() {
-    // Get location
+    // Get location of user
     this.getLocation()
 
     // Get all data
     await axios.get(API + 'parking/all')
-      .then((response) => { 
-        this.parkings = response.data.features
-      })
+      .then((response) => { this.parkings = response.data.features })
     await axios.get(API + 'piste/all')
-      .then((response) => { 
-        this.pistes = response.data.features
-      })
+      .then((response) => { this.pistes = response.data.features })
     await axios.get(API + 'commerce/all')
-      .then((response) => { 
-        this.commerce = response.data.features
-      })
+      .then((response) => { this.commerce = response.data.features })
     await axios.get(API + 'gare/all')
-      .then((response) => { 
-        this.stations = response.data.features
-      })
+      .then((response) => { this.stations = response.data.features })
     await axios.get(API + 'telecabine/all')
-      .then((response) => { 
-        this.telecabines = response.data.features
-      })
+      .then((response) => { this.telecabines = response.data.features })
     await axios.get(API + 'telesiege/all')
-      .then((response) => { 
-        this.chairlifts = response.data.features
-      })
+      .then((response) => { this.chairlifts = response.data.features })
     await axios.get(API + 'teleski/all')
-      .then((response) => { 
-        this.skilifts = response.data.features
-      })
+      .then((response) => { this.skilifts = response.data.features })
   },
   methods: {
+    // Get location of user
     getLocation() {
-       if(navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.updateLocation);
-      }
+      if(navigator.geolocation) 
+        navigator.geolocation.getCurrentPosition(this.updateLocation)
     },
+    // Update data with poisition
     updateLocation(position) {
       this.position.latitude = position.coords.latitude;
       this.position.longitude = position.coords.longitude;
     },
-    getPisteColor (diff) { 
-      switch(diff) {
-        case 1: return 'green'
-        case 2: return 'blue'
-        case 3: return 'red'
-        case 4: return 'black'
-      }
-    },
-    getPolyCoords(geojson) {
-      let result = []
-      geojson.forEach((top) => {
-        top.forEach((middle) => {
-          middle.forEach((bottom) => {
-            bottom = new Array(bottom[1], bottom[0])
-            result.push(bottom)
-          })
-        })
-      })
-      return result
-    },
-     getLineCoords(geojson) {
-      let result = []
-      geojson.forEach((top) => {
-          top.forEach((bottom) => {
-            bottom = new Array(bottom[1], bottom[0])
-            result.push(bottom)
-          })
-      })
-      return result
-    }
-  },
+  }
 }
 </script>
 
