@@ -35,18 +35,26 @@
       <div class="divider"/>
     </div>
     <div class='traffic-wrapper'>
-      <label>Toggle traffic
-        <input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE_TRAFFIC, $event.target.checked)" v-model="showTraffic">
+      <label>Show traffic
+        <input type="checkbox" style="margin-left: 1rem" @change="BUS.$emit(EVENTS.TOGGLE_TRAFFIC, $event.target.checked)" v-model="showTraffic">
       </label>
+      <button @click="playPause()" :disabled="!showTraffic">
+        <img :src="'/images/icons/' + playIcon + '.svg'" />
+      </button>
     </div>
     <div class="slider-wrapper">
-       <input type="range" id="slider" name="time" min="0" max="9" list="tickmarks" v-model="hour" @change="BUS.$emit(EVENTS.TIME, hour)" :disabled="!showTraffic">
-       <datalist id="tickmarks">
-        <option value="0" label="hello"></option>
+      <input type="range" id="slider" name="time" min="0" max="9" list="hour" v-model="hour" @change="BUS.$emit(EVENTS.TIME, hour)" :disabled="!showTraffic">
+      <div class="slider-time">
+        <div>8:00</div>
+        <div>12:00</div>
+        <div>17:00</div>
+      </div>
+      <datalist id="hour">
+        <option value="0"></option>
         <option value="1"></option>
         <option value="2"></option>
         <option value="3"></option>
-        <option value="4" label="12:00"></option>
+        <option value="4"></option>
         <option value="5"></option>
         <option value="6"></option>
         <option value="7"></option>
@@ -59,7 +67,7 @@
 
 <script>
 import { EventBus } from '../main'
-import { EVENTS } from '../constants'
+import { EVENTS, MAX_HOUR } from '../constants'
 
 export default {
   name: "ControlPanel",
@@ -67,15 +75,57 @@ export default {
     return {
       BUS: EventBus,
       EVENTS: EVENTS,
+      MAX_HOUR: MAX_HOUR,
       hour: 0,
       showTraffic: false,
+      playIcon: 'play',
+      playStatus: false,
+      playInstance: null,
+    }
+  },
+  methods: {
+    playPause() {
+      if(this.hour == this.MAX_HOUR) this.restart()
+      else if(this.playStatus) this.pause()
+      else this.play()
+    },
+    play() {
+      this.playStatus = true
+      this.playIcon = 'pause'
+      let playState = window.setInterval(() => {
+        if (!this.playStatus) clearInterval(playState)
+        this.hour++
+        this.BUS.$emit(EVENTS.TIME, this.hour)
+        if (this.hour == this.MAX_HOUR) {
+          this.playIcon = 'refresh'
+          clearInterval(playState)
+        }
+      }, 800)
+    },
+    pause() {
+      console.log('pausing...')
+      this.playStatus = false
+      this.playIcon = 'play'
+    },
+    restart() {
+      this.hour = 0
+      this.play()
     }
   }
 }
 </script>
 
 <style scoped>
+  .slider-time {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    font-size: 0.8rem;
+    color: #00000079;
+  }
   .traffic-wrapper {
+    display: flex;
+    justify-content: space-between;
     text-align: left;
     margin-bottom: 1rem;
   }

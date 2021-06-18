@@ -1,4 +1,5 @@
 export const API = 'http://localhost:8000/api/'
+export const MAX_HOUR = 9
 export const EVENTS = {
   TOGGLE : {
     PISTES:'toggle_pistes', 
