@@ -23,6 +23,7 @@
           v-bind:key="'PI' + piste.properties.pk"
           :visible="loaded && pistes_visible"
           :color="showTraffic ? getColorForHour(piste, time) : getPisteColor(piste.properties.difficulty)"
+          :weight="4"
           :lat-lngs="getLineCoords(piste.geometry.coordinates)">
         <LPopup>
           <PopupPiste
@@ -37,7 +38,9 @@
           v-for="parking in parkings"
           v-bind:key="'PK' + parking.properties.pk"
           :visible="loaded && parking_visbile"
-           :color="showTraffic ? getColorForHour(parking, time) : '#9c9c9c'"
+          :color="showTraffic ? getColorForHour(parking, time) : COLORS.PARKING"
+          :fillColor="showTraffic ? getColorForHour(parking, time) : COLORS.PARKING"
+          :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
         <LPopup>
           <PopupParking 
@@ -51,8 +54,10 @@
       <LPolygon
           v-for="shop in commerce"
           v-bind:key="'SH' + shop.properties.pk"
-          :color="showTraffic ? getColorForHour(shop, time) : '#854ccf'"
           :visible="loaded && commerce_visible"
+          :color="showTraffic ? getColorForHour(shop, time) : COLORS.COMMERCE"
+          :fillColor="showTraffic ? getColorForHour(shop, time) : COLORS.COMMERCE"
+          :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
         <LPopup>
           <PopupCommerce 
@@ -67,7 +72,9 @@
           v-for="station in stations"
           v-bind:key="'ST' + station.properties.pk"
           :visible="loaded && stations_visible"
-          :color="showTraffic ? getColorForHour(station, time) : '#1fbf54'"
+          :color="showTraffic ? getColorForHour(station, time) : COLORS.STATIONS"
+          :fillColor="showTraffic ? getColorForHour(station, time) : COLORS.STATIONS"
+          :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(station.geometry.coordinates)">
         <LPopup>
           <PopupStation :name="station.properties.name"/>
@@ -77,9 +84,12 @@
       <!-- TELECABINES -->
       <LPolyline
           v-for="telecabine in telecabines"
-          :color="showTraffic ? getColorForHour(telecabine, time) : '#22a6d6'"
           v-bind:key="'T' + telecabine.properties.pk"
           :visible="loaded && telecabines_visible"
+          :color="showTraffic ? getColorForHour(telecabine, time) : COLORS.TELECABINES"
+          :fillColor="showTraffic ? getColorForHour(telecabine, time) : COLORS.TELECABINES"
+          :fillOpacity="showTraffic ? 1.0 : 0.4"
+          :weight="8"
           :lat-lngs="getLineCoords(telecabine.geometry.coordinates)">
         <LPopup>
           <PopupTelecabine :name="telecabine.properties.name"/>
@@ -91,7 +101,8 @@
           v-for="clift in chairlifts"
           v-bind:key="'CL' + clift.properties.pk"
           :visible="loaded && chairlifts_visible"
-          :color="showTraffic ? getColorForHour(clift, time) : '#03a600'"
+          :color="showTraffic ? getColorForHour(clift, time) : COLORS.CHAIRLIFTS"
+          :weight="8"
           :lat-lngs="getLineCoords(clift.geometry.coordinates)">
         <LPopup>
           <PopupChairlift :name="clift.properties.name"/>
@@ -103,7 +114,8 @@
           v-for="slift in skilifts"
           v-bind:key="'SL' + slift.properties.pk"
           :visible="loaded && skilifts_visible"
-          :color="showTraffic ? getColorForHour(slift, time) : '#cadb0d'"
+          :color="showTraffic ? getColorForHour(slift, time) : COLORS.SKILIFTS"
+          :weight="8"
           :lat-lngs="getLineCoords(slift.geometry.coordinates)">
         <LPopup>
           <PopupSkilift :name="slift.properties.name"/>
@@ -115,7 +127,7 @@
 </template>
 
 <script>
-import { API, EVENTS } from '../constants'
+import { API, EVENTS, COLORS } from '../constants'
 import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
 
 import PopupParking from './popups/PopupParking'
@@ -149,6 +161,7 @@ export default {
   },
   data() {
     return {
+      COLORS: COLORS,
 
       loaded: false,
       busy: [0,0,0,0,0,0,0,0,0,0,],
@@ -192,7 +205,7 @@ export default {
       skilifts_visible: true,
     }
   },
-  created (){
+  created () {
     // Add listeners for filters
     EventBus.$on(EVENTS.TOGGLE.PISTES,      (state) => { this.pistes_visible = state } )
     EventBus.$on(EVENTS.TOGGLE.TELECABINES, (state) => { this.telecabines_visible = state })

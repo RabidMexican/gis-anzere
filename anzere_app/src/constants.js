@@ -13,3 +13,11 @@ export const EVENTS = {
   TIME : 'time_change',
   TOGGLE_TRAFFIC : 'toggle_traffic',
 }
+export const COLORS = {
+  STATIONS:'#7b3ccf',
+  TELECABINES:'#1199ed',
+  CHAIRLIFTS:'#11ed8e',
+  SKILIFTS:'#11e6ed',
+  COMMERCE:'#ed9c11',
+  PARKING: '#5e5e5e',
+}

@@ -4,30 +4,37 @@
     <table>
       <tr>
         <td>Pistes</td>
+        <td></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.PISTES, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Telecabines</td>
+         <td><div class="key-circle" :style="'background-color: ' + COLORS.TELECABINES"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.TELECABINES, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Chair-Lifts</td>
+        <td><div class="key-circle" :style="'background-color: ' + COLORS.CHAIRLIFTS"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.CHAIRLIFTS, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Ski-Lifts</td>
+        <td><div class="key-circle" :style="'background-color: ' + COLORS.SKILIFTS"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.SKILIFTS, $event.target.checked) " checked></td>
       </tr>
       <tr>
         <td>Stations</td>
+        <td><div class="key-circle" :style="'background-color: ' + COLORS.STATIONS"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.STATIONS, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Restaurants & Bars</td>
+         <td><div class="key-circle" :style="'background-color: ' + COLORS.COMMERCE"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.COMMERCE, $event.target.checked)" checked></td>
       </tr>
       <tr>
         <td>Parking</td>
+        <td><div class="key-circle" :style="'background-color: ' + COLORS.PARKING"></div></td>
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.PARKING, $event.target.checked)" checked></td>
       </tr>
     </table>
@@ -67,7 +74,7 @@
 
 <script>
 import { EventBus } from '../main'
-import { EVENTS, MAX_HOUR } from '../constants'
+import { EVENTS, MAX_HOUR, COLORS } from '../constants'
 
 export default {
   name: "ControlPanel",
@@ -75,6 +82,7 @@ export default {
     return {
       BUS: EventBus,
       EVENTS: EVENTS,
+      COLORS: COLORS,
       MAX_HOUR: MAX_HOUR,
       hour: 0,
       showTraffic: false,
@@ -100,10 +108,9 @@ export default {
           this.playIcon = 'refresh'
           clearInterval(playState)
         }
-      }, 800)
+      }, 800) // 0.8 seconds gaps
     },
     pause() {
-      console.log('pausing...')
       this.playStatus = false
       this.playIcon = 'play'
     },
@@ -153,5 +160,12 @@ export default {
     margin-top: 2rem;
     margin-left: auto;
   }
-  tr td:first-child { padding-right: 1rem }
+  tr td:nth-child(2) { width: 1rem }
+  tr td:nth-child(1) { padding-right: 1rem }
+  .key-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid black;
+  }
 </style>
