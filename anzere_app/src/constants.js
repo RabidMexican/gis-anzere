@@ -8,5 +8,7 @@ export const EVENTS = {
     STATIONS: 'toggle_stations',
     COMMERCE: 'toggle_commerce',
     PARKING: 'toggle_parking',
-  }
+  },
+  TIME : 'time_change',
+  TOGGLE_TRAFFIC : 'toggle_traffic',
 }

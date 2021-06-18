@@ -31,6 +31,29 @@
         <td><input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE.PARKING, $event.target.checked)" checked></td>
       </tr>
     </table>
+    <div class="slider-wrapper">
+      <div class="divider"/>
+    </div>
+    <div class='traffic-wrapper'>
+      <label>Toggle traffic
+        <input type="checkbox" @change="BUS.$emit(EVENTS.TOGGLE_TRAFFIC, $event.target.checked)" v-model="showTraffic">
+      </label>
+    </div>
+    <div class="slider-wrapper">
+       <input type="range" id="slider" name="time" min="0" max="9" list="tickmarks" v-model="hour" @change="BUS.$emit(EVENTS.TIME, hour)" :disabled="!showTraffic">
+       <datalist id="tickmarks">
+        <option value="0" label="hello"></option>
+        <option value="1"></option>
+        <option value="2"></option>
+        <option value="3"></option>
+        <option value="4" label="12:00"></option>
+        <option value="5"></option>
+        <option value="6"></option>
+        <option value="7"></option>
+        <option value="8"></option>
+        <option value="9" label = "17:00"></option>
+      </datalist>
+    </div>
   </div>
 </template>
 
@@ -43,13 +66,26 @@ export default {
   data() {
     return {
       BUS: EventBus,
-      EVENTS: EVENTS
+      EVENTS: EVENTS,
+      hour: 0,
+      showTraffic: false,
     }
   }
 }
 </script>
 
 <style scoped>
+  .traffic-wrapper {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  .divider {
+    width: 90%;
+    border-top: 1px solid #d6d6d6;
+    margin: 20px auto;
+  }
+  #slider { width:80% }
+  .slider-wrapper { text-align: center }
   #logo { width: 20rem }
   .control-panel {
     text-align: right;

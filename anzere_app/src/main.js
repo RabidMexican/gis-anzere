@@ -6,7 +6,7 @@ import { Icon } from "leaflet"
 Vue.config.productionTip = false
 delete Icon.Default.prototype._getIconUrl;
 
-// 
+// import images for Leaftlet
 Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
