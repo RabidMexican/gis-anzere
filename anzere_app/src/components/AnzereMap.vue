@@ -105,7 +105,7 @@
           :weight="8"
           :lat-lngs="getLineCoords(clift.geometry.coordinates)">
         <LPopup>
-          <PopupChairlift :name="clift.properties.name"/>
+          <PopupChairlift :charlift="clift"/>
         </LPopup>
       </LPolyline>
 
@@ -118,7 +118,7 @@
           :weight="8"
           :lat-lngs="getLineCoords(slift.geometry.coordinates)">
         <LPopup>
-          <PopupSkilift :name="slift.properties.name"/>
+          <PopupSkilift :skilift="slift"/>
         </LPopup>
       </LPolyline>
 
