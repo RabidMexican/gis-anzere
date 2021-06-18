@@ -92,7 +92,7 @@
           :weight="8"
           :lat-lngs="getLineCoords(telecabine.geometry.coordinates)">
         <LPopup>
-          <PopupTelecabine :name="telecabine.properties.name"/>
+          <PopupTelecabine :telecabine="telecabine"/>
         </LPopup>
       </LPolyline>
 
