@@ -164,7 +164,7 @@ export default {
       COLORS: COLORS,
 
       loaded: false,
-      busy: [0,0,0,0,0,0,0,0,0,0,],
+      busy: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       percentColors : [
         { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
         { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },

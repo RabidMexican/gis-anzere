@@ -50,7 +50,7 @@
       </button>
     </div>
     <div class="slider-wrapper">
-      <input type="range" id="slider" name="time" min="0" max="9" list="hour" v-model="hour" @change="BUS.$emit(EVENTS.TIME, hour)" :disabled="!showTraffic">
+      <input type="range" id="slider" name="time" min="0" max="18" list="hour" v-model="hour" @change="BUS.$emit(EVENTS.TIME, hour)" :disabled="!showTraffic">
       <div class="slider-time">
         <div>8:00</div>
         <div>12:00</div>
@@ -66,7 +66,16 @@
         <option value="6"></option>
         <option value="7"></option>
         <option value="8"></option>
-        <option value="9" label = "17:00"></option>
+        <option value="9"></option>
+        <option value="10"></option>
+        <option value="11"></option>
+        <option value="12"></option>
+        <option value="13"></option>
+        <option value="14"></option>
+        <option value="15"></option>
+        <option value="16"></option>
+        <option value="17"></option>
+        <option value="18"></option>
       </datalist>
     </div>
   </div>
