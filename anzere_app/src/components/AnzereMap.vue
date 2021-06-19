@@ -26,9 +26,7 @@
           :weight="4"
           :lat-lngs="getLineCoords(piste.geometry.coordinates)">
         <LPopup>
-          <PopupPiste
-              :name="piste.properties.name"
-              :difficulty="piste.properties.difficulty"/>
+          <PopupPiste :piste="piste"/>
         </LPopup>
       </LPolyline>
       <!--:color="getPisteColor(piste.properties.difficulty)"-->
@@ -43,10 +41,7 @@
           :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(parking.geometry.coordinates)">
         <LPopup>
-          <PopupParking 
-              :name="parking.properties.name"
-              :capacity="parking.properties.nb_place"
-              :free="parking.properties.free"/>
+          <PopupParking :parking="parking" />
         </LPopup>
       </LPolygon>
 
@@ -60,10 +55,7 @@
           :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(shop.geometry.coordinates)">
         <LPopup>
-          <PopupCommerce 
-              :name="shop.properties.name"
-              :type="shop.properties.type"
-              :places="shop.properties.nb_place"/>
+          <PopupCommerce :shop="shop" />
         </LPopup>
       </LPolygon>
 
@@ -77,7 +69,7 @@
           :fillOpacity="showTraffic ? 1.0 : 0.4"
           :lat-lngs="getPolyCoords(station.geometry.coordinates)">
         <LPopup>
-          <PopupStation :name="station.properties.name"/>
+          <PopupStation :station="station"/>
         </LPopup>
       </LPolygon>
 
@@ -105,7 +97,7 @@
           :weight="8"
           :lat-lngs="getLineCoords(clift.geometry.coordinates)">
         <LPopup>
-          <PopupChairlift :charlift="clift"/>
+          <PopupChairlift :chairlift="clift"/>
         </LPopup>
       </LPolyline>
 
