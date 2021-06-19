@@ -5,7 +5,7 @@
       {{ priceText }}
     </div>
     <div class="icon-wrapper">
-      <div class="capacity">Capacity : {{ parking.properties.capacity }}</div>
+      <div class="capacity">Capacity : {{ parking.properties.nb_place }} places</div>
       <img src="/images/icons/parking.png" class="icon">
     </div>
     <div class='chart-wrapper'>
