@@ -6,7 +6,7 @@ GIS project for Anzere ski resort
  - /anzere
     - Django back-end
  - /anzere_app
-     - VueJS front-end
+    - VueJS front-end
 ```
 
 ## Setup
