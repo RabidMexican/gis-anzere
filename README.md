@@ -3,11 +3,10 @@ GIS project for Anzere ski resort
 
 ## Project structure
 ```
-./
- |_ anzere
-     |_ Django back-end
- |_ anzere_app
-     |_ VueJS front-end
+ - /anzere
+    - Django back-end
+ - /anzere_app
+     - VueJS front-end
 ```
 
 ## Setup
