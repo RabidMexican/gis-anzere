@@ -87,6 +87,20 @@ import { EVENTS, MAX_HOUR, COLORS } from '../constants'
 
 export default {
   name: "ControlPanel",
+  props: {
+    skilifts: {
+      require: true,
+      type: Object,
+    },
+    chairlifts: {
+      require: true,
+      type: Object,
+    },
+    telecabines: {
+      require: true,
+      type: Object,
+    },
+  },
   data() {
     return {
       BUS: EventBus,

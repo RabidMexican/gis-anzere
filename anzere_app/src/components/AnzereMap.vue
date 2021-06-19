@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { API, EVENTS, COLORS } from '../constants'
+import { EVENTS, COLORS } from '../constants'
 import { LMap, LTileLayer, LMarker, LPopup, LPolygon, LIcon, LPolyline } from 'vue2-leaflet'
 
 import PopupParking from './popups/PopupParking'
@@ -131,7 +131,6 @@ import PopupChairlift from './popups/PopupCharlift'
 import PopupSkilift from './popups/PopupSkilift'
 
 import { EventBus } from '../main'
-import axios from 'axios'
 
 export default {
   name: "Map",
@@ -150,6 +149,36 @@ export default {
     LPolygon,
     LPolyline,
     LIcon
+  },
+  props: {
+    stations: {
+      require:true,
+      type: Array,
+    },
+    parkings: {
+      require:true,
+      type: Array,
+    },
+    commerce: {
+      require:true,
+      type: Array,
+    },
+    chairlifts: {
+      require:true,
+      type: Array,
+    },
+    skilifts: {
+      require:true,
+      type: Array,
+    },
+    telecabines: {
+      require:true,
+      type: Array,
+    },
+    pistes: {
+      require:true,
+      type: Array,
+    },
   },
   data() {
     return {
@@ -175,25 +204,12 @@ export default {
       zoom: 14,
       center: [46.3164, 7.4048],
 
-      parkings: [],
       parking_visbile: true,
-
-      pistes: [],
       pistes_visible: true,
-
-      commerce: [],
       commerce_visible: true,
-
-      stations: [],
       stations_visible: true,
-
-      telecabines: [],
       telecabines_visible: true,
-
-      chairlifts: [],
       chairlifts_visible: true,
-
-      skilifts: [],
       skilifts_visible: true,
     }
   },
@@ -212,28 +228,8 @@ export default {
   async mounted() {
     // Get location of user
     this.getLocation()
-
-    // Get all data
-    await axios.get(API + 'parking/all')
-      .then((response) => { this.parkings = response.data.features })
-    await axios.get(API + 'piste/all')
-      .then((response) => { this.pistes = response.data.features })
-    await axios.get(API + 'commerce/all')
-      .then((response) => { this.commerce = response.data.features })
-    await axios.get(API + 'gare/all')
-      .then((response) => { this.stations = response.data.features })
-    await axios.get(API + 'telecabine/all')
-      .then((response) => { this.telecabines = response.data.features })
-    await axios.get(API + 'telesiege/all')
-      .then((response) => { this.chairlifts = response.data.features })
-    await axios.get(API + 'teleski/all')
-      .then((response) => { this.skilifts = response.data.features })
-    
-    await this.getBuisiestHour()
-
+    this.getBuisiestHour()
     this.loaded = true
-
-    this.getColorForHour(this.parkings[0], 0)
   },
   methods: {
     // Get location of user
